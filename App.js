@@ -13,13 +13,13 @@ export default function App() {
     8,
     9,
     'x',
-    6,
-    5,
     4,
+    5,
+    6,
     '-',
-    3,
-    2,
     1,
+    2,
+    3,
     '+',
     0,
     '.',
@@ -36,7 +36,7 @@ export default function App() {
     const lastNumber = parseFloat(splitNumbers[2]);
     const operator = splitNumbers[1];
 
-    // Faz ação referente tecla pressionada
+    // Faz ação referente tecla pressionadas
     switch (operator) {
       case '+':
         setCurrentNumber((fistNumber + lastNumber).toString());
@@ -45,10 +45,13 @@ export default function App() {
         setCurrentNumber((fistNumber - lastNumber).toString());
         return;
       case 'x':
-        setCurrentNumber((fistNumber + lastNumber).toString());
+        setCurrentNumber((fistNumber * lastNumber).toString());
         return;
       case '/':
-        setCurrentNumber((fistNumber - lastNumber).toString());
+        setCurrentNumber((fistNumber / lastNumber).toString());
+        return;
+      case '%':
+        setCurrentNumber(((fistNumber * lastNumber) / 100).toString());
         return;
     }
   }
@@ -59,14 +62,15 @@ export default function App() {
       (buttonPressed === '+') |
       (buttonPressed === '-') |
       (buttonPressed === 'x') |
-      (buttonPressed === '/')
+      (buttonPressed === '/') |
+      (buttonPressed === '%')
     ) {
       setCurrentNumber(currentNumber + ' ' + buttonPressed + ' ');
       return;
     }
     switch (buttonPressed) {
       case 'DEL':
-        setCurrentNumber(currentNumber.substring(0, currentNumber.length - 2));
+        setCurrentNumber(currentNumber.substring(0, currentNumber.length - 1));
         return;
       case 'LIMPAR': // Limpa todo o conteúdo
         setLastNumber('');
@@ -77,6 +81,7 @@ export default function App() {
         calculator();
         return;
       case '+/-':
+        setCurrentNumber(currentNumber + '+');
         return;
     }
 
@@ -98,7 +103,7 @@ export default function App() {
             <TouchableOpacity
               onPress={() => handleInput(button)}
               key={button}
-              style={[styles.button, {backgroundColor: '#3dd0e3'}]}>
+              style={[styles.button, {backgroundColor: '#190033'}]}>
               <Text style={[styles.textButton, {color: 'white', fontSize: 30}]}>
                 {button}
               </Text>
@@ -112,7 +117,7 @@ export default function App() {
               <Text
                 style={[
                   styles.textButton,
-                  {color: typeof button === 'number' ? 'black' : '#0093a6'},
+                  {color: typeof button === 'number' ? 'white' : '#7c7c7c'},
                 ]}>
                 {button}
               </Text>
@@ -124,7 +129,6 @@ export default function App() {
   );
 }
 
-
 // Estilização
 const styles = StyleSheet.create({
   container: {
@@ -132,18 +136,18 @@ const styles = StyleSheet.create({
   },
   results: {
     flex: 2,
-    justifyContent: "center",
-    backgroundColor: "#f5f5f5"
+    justifyContent: 'center',
+    backgroundColor: '#190033',
   },
   resultText: {
-    color: "#282F38",
+    color: 'white',
     fontSize: 32,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     padding: 12,
-    textAlign: "right"
+    textAlign: 'right',
   },
-  historyText:{
-    color: "#7c7c7c",
+  historyText: {
+    color: '#7c7c7c',
     fontSize: 20,
     marginRight: 10,
     alignSelf: 'flex-end',
@@ -153,15 +157,14 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   button: {
-    backgroundColor: 'white',
+    backgroundColor: '#330066',
     alignItems: 'center',
     justifyContent: 'center',
-    minWidth: 90, 
+    minWidth: 90,
     minHeight: 90,
     flex: 2,
   },
   textButton: {
-    color: "#7c7c7c",
     fontSize: 20,
-  } 
+  },
 });
